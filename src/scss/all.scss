@@ -6,6 +6,8 @@
     box-sizing: border-box;
 }
 
+// 針對整個網頁
+
 @mixin full-size {
     position: absolute;
     top: 0;
@@ -61,6 +63,22 @@
     }
 }
 
+.btn-brown {
+    background-color: rgb(109, 77, 67);
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    padding: 0.5em 1em;
+    line-height: 1.5;
+
+    &:hover:not(:disabled) {
+        // 滑過時的背景與文字顏色
+        background-color: rgb(245, 197, 185);
+        color: white;
+    }
+}
+
 .btn-deepPink {
     background-color: rgb(245, 197, 185);
     color: white;
@@ -85,6 +103,7 @@
     &:hover {
         // 滑過時的背景與文字顏色
         background-color: rgb(253, 229, 223);
+        color: rgb(109, 77, 67);
     }
 }
 
@@ -101,7 +120,11 @@ h4 {
     font-weight: bold;
 }
 
-// 針對整個網頁的底色
+h2 {
+    font-weight: bold;
+    color: rgb(109, 77, 67);
+}
+
 html {
     overflow-x: hidden;
     /* 負責鎖住寬度 */
@@ -109,6 +132,7 @@ html {
     /* 確保高度參考鏈完整 */
 }
 
+// 針對整個網頁的底色
 body {
     background-color: rgb(253, 229, 223);
     overflow-x: hidden;
@@ -194,6 +218,7 @@ body {
         h3 {
             font-weight: bold;
             margin-bottom: 1rem;
+            color: white;
         }
 
         h1 {
@@ -416,6 +441,7 @@ body {
             font-size: 1.75rem; // 手機版稍微收斂
         }
     }
+
     .lh-1 {
         line-height: 1; // 移除多餘的行高，讓底部對齊更精準
     }

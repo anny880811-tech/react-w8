@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Loading from "../../components/Loading";
 import getProductsError from "../../utils/pushMessage";
+import { useDispatch } from "react-redux";
+import { createAsyncMessage } from "../../slice/messageSlice";
 
 
 const API_BASE = import.meta.env.VITE_API_BASE;
@@ -14,6 +16,7 @@ const Products = () => {
     const [products, setproducts] = useState([]);
     const [cartItem, setCartItem] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -51,8 +54,9 @@ const Products = () => {
             setIsLoading(product_id);
             const res = await axios.post(`${API_BASE}/api/${API_PATH}/cart`, sentData)
             getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
-            getProductsError(error);
+            dispatch(createAsyncMessage(error.response.data));
         } finally {
             setIsLoading('');
         }

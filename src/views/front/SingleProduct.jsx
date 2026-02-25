@@ -5,6 +5,8 @@ import Loading from "../../components/Loading";
 import getProductsError from "../../utils/pushMessage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
+import { useDispatch } from "react-redux";
+import { createAsyncMessage } from "../../slice/messageSlice";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -16,6 +18,7 @@ const SingleProduct = () => {
     const [cartItem, setCartItem] = useState([]);
     const [product, setproduct] = useState({});
     const { id } = useParams();
+    const dispatch = useDispatch();
 
 
     const getCart = async () => {
@@ -38,8 +41,9 @@ const SingleProduct = () => {
             setIsLoading(true);
             const res = await axios.post(`${API_BASE}/api/${API_PATH}/cart`, sentData);
             getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
-            getProductsError(error);
+            dispatch(createAsyncMessage(error.response.data));
         } finally {
             setIsLoading(false);
         }

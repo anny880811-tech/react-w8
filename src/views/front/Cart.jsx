@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router";
 import getProductsError from "../../utils/pushMessage";
+import { useDispatch } from "react-redux";
+import useMessage from "../../hooks/useMessage";
+
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -14,6 +17,7 @@ const Cart = () => {
     const [cartItem, setCartItem] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
+    const {showError,showSuccess}=useMessage();
 
     const getCart = async () => {
         try {
@@ -40,10 +44,11 @@ const Cart = () => {
         };
         try {
             setIsLoading(`${id}-${action}`);
-            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cart/${id}`, updateQty)
+            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cat/${id}`, updateQty)
             getCart();
+            showSuccess('已成功更新數量');
         } catch (error) {
-            getProductsError(error);
+            showError(error.response.data.message);
         } finally {
             setIsLoading('');
         }
@@ -53,8 +58,9 @@ const Cart = () => {
         try {
             const res = await axios.delete(`${API_BASE}/api/${API_PATH}/cart/${id}`)
             getCart();
+            showSuccess('已刪除產品');
         } catch (error) {
-            getProductsError(error);
+            showError(error.response.data.message);
         }
     }
 
@@ -63,8 +69,9 @@ const Cart = () => {
             setIsLoading('loading-delete');
             const res = await axios.delete(`${API_BASE}/api/${API_PATH}/carts`)
             getCart();
+            showSuccess('已清空購物車');
         } catch (error) {
-            getProductsError(error);
+            showError(error.response.data.message);
         } finally {
             setIsLoading('');
         }

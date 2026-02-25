@@ -5,6 +5,9 @@ import AdminProductTable from "../../components/AdminProductTable";
 import AdminProductModal from "../../components/AdminProductModal";
 import AdminProductPagination from "../../components/AdminProductPagination";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createAsyncMessage } from "../../slice/messageSlice";
+import getProductsError from "../../utils/pushMessage";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -29,14 +32,16 @@ const AdminProducts = () => {
     const [modalType, setModalType] = useState('');
     const [isLoading, setIsLoading] = useState('');
     const [pagination, setPagination] = useState({});
+    const dispatch = useDispatch();
 
     const getProducts = async (page = 1) => {
         try {
             const res = await axios.get(`${API_BASE}/api/${API_PATH}/admin/products?page=${page}`);
             setProductList(res.data.products);
-            setPagination(res.data.pagination)
+            setPagination(res.data.pagination);
+            console.log(res.data)
         } catch (error) {
-            alert('資料錯誤',error.response);
+            getProductsError(error);
         }
     }
 
@@ -89,8 +94,10 @@ const AdminProducts = () => {
             }
             closeModal();
             getProducts();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
-            alert('資料錯誤',error.response);
+            alert('資料錯誤', error.response);
+            dispatch(createAsyncMessage(error.response.data));
         } finally {
             setIsLoading('');
         }
@@ -142,7 +149,7 @@ const AdminProducts = () => {
             }))
 
         } catch (error) {
-            alert('資料錯誤',error.response);
+            alert('資料錯誤', error.response);
         } finally {
             setIsLoading('');
         }
@@ -181,11 +188,12 @@ const AdminProducts = () => {
     };
 
     return (<>
-        <div className="container mt-3">
-            <h2 className="mt-4">產品列表</h2>
-            <div className="text-end mt-4 mb-3">
-                <button type="button" className="btn btn-primary" onClick={() => { openModal('create') }}>建立新產品</button>
+        <div className="container mt-3 ">
+            <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
+                <h2 className="mt-4">產品列表</h2>
+                <button type="button" className="btn btn-brown" onClick={() => { openModal('create') }}>建立新產品</button>
             </div>
+
             <AdminProductTable onOpenModal={openModal} products={productList} />
         </div>
         <AdminProductModal
@@ -202,7 +210,7 @@ const AdminProducts = () => {
             onUploadImage={uploadImage}
             onCloseModal={closeModal}
         />
-        <AdminProductPagination pagination={pagination} getProducts={getProducts}/>
+        <AdminProductPagination pagination={pagination} getProducts={getProducts} />
     </>);
 };
 
