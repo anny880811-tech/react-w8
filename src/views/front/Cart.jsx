@@ -44,7 +44,7 @@ const Cart = () => {
         };
         try {
             setIsLoading(`${id}-${action}`);
-            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cat/${id}`, updateQty)
+            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cart/${id}`, updateQty)
             getCart();
             showSuccess('已成功更新數量');
         } catch (error) {
