@@ -1,0 +1,38 @@
+.responsive-container {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 2 / 1; /* 讓右圖變長方形的關鍵：寬度是高度的2倍 */
+    overflow: hidden;
+    position: relative; /* 必備：讓子元素可以絕對定位 */
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 5rem;
+}
+
+/* 右圖：填滿整個背景 */
+.panel-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%; /* 讓它撐滿，當作背景 */
+    height: 100%;
+    z-index: 1;
+}
+
+/* 左圖：蓋在左邊，切出斜角 */
+.panel-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%; /* 這裡控制左圖要佔多少寬度 */
+    height: 100%;
+    z-index: 2; /* 確保在右圖上面 */
+    /* 只幫左圖切斜邊，右圖完全不切，這樣中間就不會有縫！ */
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+}
+
+.panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

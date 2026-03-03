@@ -23,7 +23,7 @@ const defaultModalState = {
     "imageUrl": "",
     "imagesUrl": [],
 };
-const categories = ['身心療癒', '身心靈與核心', '燃脂動態', '功能性訓練', '力量與重訓', '器械皮拉提斯'];
+const categories = ['身心療癒', '身心靈與核心', '高強度有氧', '力量與重訓'];
 
 const AdminProducts = () => {
     const [productList, setProductList] = useState([]);

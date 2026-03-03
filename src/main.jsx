@@ -7,8 +7,10 @@ import './scss/all.scss';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import './styles.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store.js';
+
 
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>

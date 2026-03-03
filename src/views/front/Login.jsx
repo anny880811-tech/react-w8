@@ -16,7 +16,7 @@ const Login = () => {
             });
             const { token, expired } = res.data;
             document.cookie = `anToken=${token}; expires=${new Date(expired).toUTCString()}`;
-            navigate('/admin');
+            navigate('/admin/product');
         } catch (error) {
             alert('登入失敗',error.response?.data?.message);
         };

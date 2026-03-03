@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 function MessageToast() {
     const messages = useSelector((state) => state.message);
     return (<>
-        <div className="toast-container position-fixed top-0 end-0 p-3">
+        <div className="toast-container position-fixed top-0 end-0 p-3" style={{ zIndex: 1500, marginTop: '55px' }}>
             {messages.map((message, index) => {
                 return <div key={message.id} className="toast show" role='alert' aria-live='assertive' aria-atomic='true'>
                     <div className={`toast-header text-white bg-${message.type}`}>

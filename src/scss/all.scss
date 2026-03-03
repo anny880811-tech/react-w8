@@ -1,9 +1,55 @@
+$my-custom-green: #629173;
+$my-custom-red: #924d56;
+$my-custom-blue: #4d6692;
+$my-custom-secondary: #8a919e;
+
+$theme-colors: (
+    'success':$my-custom-green,
+    'danger':$my-custom-red,
+    'primary':$my-custom-blue,
+    'secondary':$my-custom-secondary,
+);
+
 @import "bootstrap/scss/bootstrap";
+// 1. 引入 Google Fonts (包含中文字體 Noto Sans TC 與英文字體 Montserrat)
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap');
+
+@import "pages/products";
+@import "pages/singleProduct";
+@import "pages/cart";
+@import "pages/about.scss";
+
+// 2. 定義字體變數
+$font-primary: 'Noto Sans TC', sans-serif; // 主要內文、標題用
+$font-price: 'Montserrat', sans-serif; // 專門給價格、數字用
+$font-serif: 'Noto Serif TC', serif; // 精品感標題用 (選配)
+
+// 3. 定義常用字重 (Weight)
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-bold: 700;
+
+h5 {
+    color: rgb(109, 77, 67);
+}
+
+h3 {
+    color: rgb(109, 77, 67);
+    font-weight: bold;
+}
 
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+}
+
+img:not(.hero img) {
+    // sepia 增加暖色，hue-rotate 向粉紅偏移，brightness 配合背景亮度
+    filter: sepia(0.1) hue-rotate(-15deg) brightness(1.05);
+
+    // 增加平滑感，避免圖片載入時跳動太突兀
+    transition: filter 0.3s ease;
 }
 
 // 針對整個網頁
@@ -107,6 +153,32 @@
     }
 }
 
+.btn-pink {
+    background-color: rgb(250, 186, 170);
+    color: white;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    border: none;
+    line-height: 1.5;
+    padding: 0.2em 0.8em;
+    box-shadow: 0 5px 12px rgba(116, 75, 63, 0.5);
+    // --- 新增陰影樣式 ---
+    // 參數順序：水平偏移 垂直偏移 模糊距離 擴散距離 顏色
+    transition: all 0.3s ease;
+
+    // 2. 當螢幕寬度大於 768px 時（平板/電腦）
+    @media (min-width: 768px) {
+        font-size: 1.5rem; // 回復到你原本設定的大小
+    }
+
+    &:hover {
+        transform: translateX(8px);
+        background-color: rgb(117, 100, 95);
+        color: white;
+    }
+}
+
 .custom-loading {
     display: flex;
     justify-content: center;
@@ -125,17 +197,25 @@ h2 {
     color: rgb(109, 77, 67);
 }
 
-html {
-    overflow-x: hidden;
-    /* 負責鎖住寬度 */
-    height: 100%;
-    /* 確保高度參考鏈完整 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; // 禁止水平捲軸
 }
 
 // 針對整個網頁的底色
 body {
-    background-color: rgb(253, 229, 223);
-    overflow-x: hidden;
+    font-family: $font-primary;
+    //background-color: rgb(253, 229, 223);
+    background-image: url('../assets/001.png');
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: 0 0;
+    background-attachment: scroll;
+    padding-top: 65px;
+    background-attachment: fixed;
 }
 
 .fade-in {
@@ -158,20 +238,29 @@ body {
 .custom-navbar {
     width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    // overflow: hidden;
     background-color: rgb(245, 197, 185);
     display: flex;
     justify-content: space-between; // 讓左右兩組分開
-    align-items: center;
-    padding: 0.2%;
+    align-items: flex-end;
+    padding: 0 5% 10px 3%;
     margin: 0;
-    min-height: 60px;
-    flex-wrap: wrap;
+    min-height: 65px;
+    flex-wrap: nowrap;
+    position: fixed; // 改成 fixed
+    top: 0;
+    left: 0;
+    z-index: 2000;
+
+    .nav-left-group {
+        display: flex;
+        align-items: flex-end;
+    }
 
     .nav-links-group,
     .nav-login-group {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         flex-wrap: nowrap;
         white-space: nowrap;
     }
@@ -179,9 +268,10 @@ body {
     .nav-link-item {
         color: white;
         text-decoration: none;
-        font-size: 1rem;
-        margin: 0.3rem 0.5rem;
-        margin-block-end: 0.2rem;
+        font-size: 0.8rem;
+        line-height: 1;
+        margin: 0 0.8rem;
+        padding-bottom: 2px;
         font-weight: 550;
         word-break: keep-all;
 
@@ -190,8 +280,32 @@ body {
         }
 
         @include media-breakpoint-up(md) {
-            font-size: 1.6rem;
-            margin: 1rem 1.5rem;
+            font-size: 1.4rem; // 稍微縮小一點避免太擠
+            margin: 0 1.2rem;
+            padding-bottom: 3px; // 電腦版字大，底部多留一點點
+        }
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 30px; // 1. 固定高度，避免撐開 Navbar
+            width: auto; // 2. 寬度自動，維持比例
+            max-height: 100%; // 3. 確保不超過父容器
+            object-fit: contain;
+            margin-right: 15px; // 與文字的間距
+            filter: brightness(0) saturate(100%) invert(92%) sepia(21%) saturate(537%) hue-rotate(307deg) brightness(108%) contrast(98%);
+
+            @include media-breakpoint-up(md) {
+                height: 40px;
+                margin-right: 15px;
+            }
+        }
+
+        &:hover img {
+            transform: scale(1.05); // 滑過時輕微放大，增加互動感
         }
     }
 }
@@ -204,15 +318,26 @@ body {
     height: 100vh;
     overflow: hidden;
 
+    @media(max-width:768px) {
+        height: 85vh;
+    }
+
     .hero-overlay {
         @include full-size;
-        background-color: rgba(160, 160, 160, 0.3);
+        background-color: rgba(150, 150, 150, 0.3);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         color: white;
-        padding-bottom: 18%;
+        padding-bottom: 18.5%;
+        text-align: center;
+        padding-left: 15px; // 增加左右內距確保不貼邊
+        padding-right: 15px;
+
+        @media (max-width: 768px) {
+            padding-bottom: 20vh;
+        }
 
         h1,
         h3 {
@@ -222,412 +347,63 @@ body {
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.8rem; // 維持原本大小
+            font-weight: bold;
+            margin-bottom: 1rem;
+            white-space: nowrap;
+
+            @media (max-width: 768px) {
+                // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            // 針對更小的手機（如 iPhone SE）做微調
+            @media (max-width: 375px) {
+                font-size: 1.8rem;
+            }
         }
 
         h3 {
+            font-size: 1.7rem; // 這是 h3 預設接近的大小
+            font-weight: bold;
+            margin-bottom: 0.8rem;
             opacity: 0.9;
+
+            @media (max-width: 768px) {
+                // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+                font-size: 1.3rem;
+                letter-spacing: 1px;
+            }
+
+            // 針對更小的手機（如 iPhone SE）做微調
+            @media (max-width: 375px) {
+                font-size: 1.1rem;
+            }
         }
 
         p {
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1.1rem; // 維持原本大小
+            line-height: 1.5;
             letter-spacing: 1px;
-            text-align: center;
-        }
 
+            @media (max-width: 768px) {
+                // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            // 針對更小的手機（如 iPhone SE）做微調
+            @media (max-width: 375px) {
+                font-size: 0.4rem;
+            }
+        }
     }
 
     .img-custom {
         @include full-size;
         object-fit: cover;
         z-index: -1;
-    }
-}
-
-// 產品專用樣式
-.custom-card {
-    background-color: rgb(248, 242, 242);
-    color: rgb(109, 77, 67);
-    font-weight: bold;
-    border-radius: 12px;
-    overflow: hidden;
-    border-collapse: separate;
-    margin: 0.25rem 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(109, 77, 67, 0.1);
-
-    .custom-card-img {
-        @extend .card-img-top;
-        object-fit: cover;
-        width: 100%;
-        aspect-ratio: 4/3;
-    }
-
-    .custom-card-body {
-        padding: 1rem;
-    }
-
-    .d-flex.gap-2 {
-        margin-top: 0.5rem;
-    }
-
-    h5 {
-        color: rgb(109, 77, 67);
-        font-weight: bold;
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
-    }
-
-    p {
-        margin-bottom: 0.2rem;
-    }
-}
-
-// 骨架屏閃爍動畫
-@keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-// 骨架屏佔位元件通用樣式
-.skeleton-box {
-    background: linear-gradient(90deg,
-            rgba(109, 77, 67, 0.05) 25%,
-            rgba(109, 77, 67, 0.15) 50%,
-            rgba(109, 77, 67, 0.05) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
-    border-radius: 4px;
-}
-
-// 骨架屏專用卡片擴充
-.skeleton-card {
-    @extend .custom-card; // 繼承你原本 custom-card 的背景、邊框、圓角
-    pointer-events: none;
-
-    .skeleton-img {
-        @extend .skeleton-box;
-        width: 100%;
-        aspect-ratio: 4/3; // 確保與 .custom-card-img 比例一致
-        border-radius: 12px 12px 0 0;
-    }
-
-    .skeleton-body {
-        padding: 1rem; // 對齊你的 .custom-card-body
-    }
-
-    .skeleton-title {
-        @extend .skeleton-box;
-        height: 1.5rem;
-        width: 60%;
-        margin: 0.5rem 0 1rem 0; // 對齊 h5 的 margin
-    }
-
-    .skeleton-text {
-        @extend .skeleton-box;
-        height: 1rem;
-        width: 80%;
-        margin-bottom: 1.2rem; // 對齊價格與分類的間距
-    }
-
-    .skeleton-btn-group {
-        display: flex;
-        gap: 0.5rem; // 對齊 gap-2
-        margin-top: 0.5rem;
-
-        .skeleton-btn {
-            @extend .skeleton-box;
-            flex: 1;
-            height: 38px; // 模擬按鈕高度
-            border-radius: 6px;
-        }
-    }
-}
-
-
-// 產品詳細頁專用樣式
-.main-image-container {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-    margin-bottom: 1rem;
-
-    .product-main-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-.thumb-scroll-container {
-    display: flex;
-    padding-bottom: 8px;
-    justify-content: flex-start;
-    gap: 10px;
-    overflow-x: auto; // 確保縮圖過多時可以左右滑動
-    white-space: nowrap;
-
-    &::-webkit-scrollbar {
-        height: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: #e2e2e2;
-        border-radius: 4px;
-    }
-
-    .thumb-item {
-        width: 90px;
-        height: 90px;
-        flex-shrink: 0;
-        object-fit: cover;
-        cursor: pointer;
-        border-radius: 4px;
-        overflow: hidden;
-        border: 2px solid transparent;
-        transition: all 0.2s ease;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        &:hover,
-        &.active {
-            border-color: rgb(109, 77, 67);
-        }
-
-        @include media-breakpoint-up(md) {
-            width: 110px;
-            height: 110px;
-        }
-
-        @include media-breakpoint-up(lg) {
-            width: 125px;
-            height: 125px;
-        }
-    }
-}
-
-.custom-color-box {
-    color: rgb(109, 77, 67);
-
-    h3 {
-        font-weight: bold;
-    }
-}
-
-.text-deep-brown {
-    color: rgb(109, 77, 67); // 使用你原本定義的主色
-}
-
-.price-group {
-    .fs-2 {
-        font-size: 2rem; // 售價大一點
-
-        @include media-breakpoint-down(md) {
-            font-size: 1.75rem; // 手機版稍微收斂
-        }
-    }
-
-    .lh-1 {
-        line-height: 1; // 移除多餘的行高，讓底部對齊更精準
-    }
-}
-
-
-// 產品購物車專用樣式
-@media (max-width: 767.98px) {
-    .custom-cart-table {
-        display: none;
-        /* 隱藏傳統表格 */
-    }
-
-    /* 調整圖片大小與表單間距 */
-    .cart-form {
-        padding: 15px;
-    }
-}
-
-.cart-isPageLoading {
-    @extend .mt-3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    padding: 5%;
-
-    h2 {
-        font-weight: bold;
-    }
-}
-
-.custom-emptyCart {
-    @extend .mt-3;
-    background-color: white;
-    color: rgb(109, 77, 67);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    padding: 5%;
-
-    h2 {
-        font-weight: bold;
-    }
-}
-
-.custom-cart {
-    @extend .mt-3;
-    color: rgb(109, 77, 67);
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between
-}
-
-.custom-cart-table {
-    @extend .table;
-    @extend .mt-3;
-
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    border-collapse: separate;
-
-    thead {
-        background-color: rgb(245, 197, 185);
-        color: white;
-
-
-        th {
-            border: none; // 移除表頭邊框線
-            padding: 1rem;
-        }
-    }
-
-    tbody {
-        tr {
-            td {
-                padding: 2rem 1.5rem;
-            }
-        }
-    }
-
-    h3 {
-        color: rgb(247, 155, 132);
-        font-weight: bold;
-    }
-
-    h5 {
-        color: rgb(109, 77, 67);
-        font-weight: bold;
-    }
-}
-
-.cart-form {
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 35px;
-    border-radius: 12px;
-    background-color: rgb(249, 249, 249);
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* 讓內部的 form-group 置中 */
-        width: 100%;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-        width: 100%;
-        max-width: 800px;
-        align-items: stretch;
-
-        label {
-            margin-bottom: 0.5rem;
-            /* 將數值調大（例如從 0.5rem 改到 12px 或更多） */
-            display: block;
-            color: rgb(109, 77, 67);
-            font-size: 1.1rem;
-
-            /* 確保它是區塊元素，間距才會正確生效 */
-            &.required::after {
-                content: " *"; // 星號內容
-                color: red; // 星號顏色
-                margin-left: 4px; // 與文字的間距
-            }
-        }
-    }
-
-    textarea.form-control {
-        height: auto;
-        /* 讓 rows 決定高度，或直接寫死高度 */
-        min-height: 120px;
-        /* 設定最小高度，確保看起來夠大 */
-        resize: vertical;
-        /* 只允許垂直調整大小，避免左右拉動破壞版面 */
-        padding: 12px;
-        border-radius: 8px;
-
-        /* 讓輸入框佔滿你設定的 max-width (例如 500px) */
-        width: 100%;
-    }
-
-    .error-message {
-        color: rgb(199, 82, 82);
-        font-size: 14px;
-        margin-top: 4px;
-    }
-
-    h3 {
-        color: rgb(109, 77, 67);
-        font-weight: bold;
-    }
-
-    .btn-brown {
-        width: 100%;
-        max-width: 800px;
-        padding: 10px;
-        color: white;
-        background-color: rgb(109, 77, 67);
-        margin-top: 1rem;
-        border-radius: 12px;
-        border: none;
-
-        &:hover:not(:disabled) {
-            // 滑過時的背景與文字顏色
-            background-color: rgb(245, 197, 185);
-            color: rgb(109, 77, 67);
-            cursor: pointer;
-        }
-
-        &:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
     }
 }
 

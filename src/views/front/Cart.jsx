@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router";
 import getProductsError from "../../utils/pushMessage";
-import { useDispatch } from "react-redux";
 import useMessage from "../../hooks/useMessage";
 
 
@@ -94,8 +93,9 @@ const Cart = () => {
             });
             getCart();
             reset();
+            showSuccess('訂單已送出');
         } catch (error) {
-            getProductsError(error);
+            showError(error.response.data.message);
         } finally {
             setIsLoading('');
         }
