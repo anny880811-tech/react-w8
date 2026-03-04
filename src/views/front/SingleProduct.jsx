@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 import getProductsError from "../../utils/pushMessage";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useDispatch } from "react-redux";
-import { createAsyncMessage } from "../../slice/messageSlice";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SingleProductSkeleton from "../../components/SingleProductSkeleton";
+import useMessage from "../../hooks/useMessage";
+import { addToCartAsync } from "../../slice/cartSlice";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -18,24 +18,15 @@ const SingleProduct = () => {
     const [isAddToCartLoading, setIsAddToCartLoading] = useState(false);
     const [qty, setQty] = useState(1);
     const [mainImage, setMainImage] = useState('');
-    const [cartItem, setCartItem] = useState([]);
     const [product, setproduct] = useState(null);
     const [productList, setproductList] = useState([]);
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [swiperRef, setSwiperRef] = useState(null);
+    const { showSuccess, showError } = useMessage();
 
-    const getCart = async () => {
-        try {
-            const res = await axios.get(`${API_BASE}/api/${API_PATH}/cart`);
-            setCartItem(res.data.data.carts)
-        } catch (error) {
-            getProductsError(error);
-        }
-    };
-
-    const addToCart = async (product_id, qty) => {
+    const addToCart = async (product_id, qty = 1) => {
         const sentData = {
             'data': {
                 'product_id': product_id,
@@ -44,11 +35,10 @@ const SingleProduct = () => {
         }
         setIsAddToCartLoading(true);
         try {
-            const res = await axios.post(`${API_BASE}/api/${API_PATH}/cart`, sentData);
-            getCart();
-            dispatch(createAsyncMessage(res.data));
+            await dispatch(addToCartAsync(sentData)).unwrap();
+            showSuccess('已加入購物車');
         } catch (error) {
-            dispatch(createAsyncMessage(error.response.data));
+            showError(error.message || '加入失敗');
         } finally {
             setIsAddToCartLoading(false);
         }
@@ -91,13 +81,11 @@ const SingleProduct = () => {
         }
         window.scrollTo(0, 0);
         productDetail(id);
-        getCart();
-    }, [id])
+    }, [id, dispatch])
 
     if (!product) {
         return <SingleProductSkeleton />;
     }
-
     return (<>
         {isLoading ? <SingleProductSkeleton /> : <div className="container mt-3 fade-in">
             <h5 style={{ cursor: 'pointer' }} onClick={() => navigate('/product')}><i className="bi bi-reply-fill"></i>返回課程列表</h5>
@@ -145,7 +133,7 @@ const SingleProduct = () => {
                     </div>
                 </div>
             </div>
-            {productList.length > 0 && (<><h3 className="text-center"style={{ marginTop: '100px' }}>妳可能喜歡</h3>
+            {productList.length > 0 && (<><h3 className="text-center" style={{ marginTop: '100px' }}>妳可能喜歡</h3>
                 <div className="mt-3">
                     <Swiper
                         onSwiper={setSwiperRef}
@@ -176,7 +164,7 @@ const SingleProduct = () => {
                         {productList.map((item) => {
                             return (
                                 <SwiperSlide key={item.id}>
-                                    <div className="card h-100 shadow">
+                                    <div className="card h-100">
                                         <img src={item.imageUrl} className="custom-card-swiperSlide-img" alt="產品主圖" />
                                         <div className="card-body">
                                             <h5 className="card-title text-center">{item.title}</h5>

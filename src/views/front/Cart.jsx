@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router";
-import getProductsError from "../../utils/pushMessage";
 import useMessage from "../../hooks/useMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllCartItemAsync, deleteCartItemAsync, getCartAsync } from "../../slice/cartSlice";
 
 
 const API_BASE = import.meta.env.VITE_API_BASE;
@@ -13,24 +14,24 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 const Cart = () => {
     const [isLoading, setIsLoading] = useState('');
     const [IsPageLoading, setIsPageLoading] = useState(true);
-    const [cartItem, setCartItem] = useState([]);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
-    const {showError,showSuccess}=useMessage();
-
-    const getCart = async () => {
-        try {
-            const res = await axios.get(`${API_BASE}/api/${API_PATH}/cart`);
-            setCartItem(res.data.data.carts)
-        } catch (error) {
-            getProductsError(error);
-        } finally { setIsPageLoading(false); }
-    };
-
+    const { showError, showSuccess } = useMessage();
+    const dispatch = useDispatch();
+    const cartItem = useSelector((state) => state.cart.carts);
 
     useEffect(() => {
-        getCart();
-    }, [])
+        (async () => {
+            try {
+                await dispatch(getCartAsync()).unwrap();
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                setIsPageLoading(false);
+            }
+        })();
+        window.scrollTo(0, 0);
+    }, [dispatch])
 
     const handleView = () => { navigate(`/product`) }
 
@@ -43,8 +44,8 @@ const Cart = () => {
         };
         try {
             setIsLoading(`${id}-${action}`);
-            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cart/${id}`, updateQty)
-            getCart();
+            const res = await axios.put(`${API_BASE}/api/${API_PATH}/cart/${id}`, updateQty);
+            await dispatch(getCartAsync()).unwrap();
             showSuccess('已成功更新數量');
         } catch (error) {
             showError(error.response.data.message);
@@ -55,22 +56,20 @@ const Cart = () => {
 
     const deleteCartItem = async (id) => {
         try {
-            const res = await axios.delete(`${API_BASE}/api/${API_PATH}/cart/${id}`)
-            getCart();
+            await dispatch(deleteCartItemAsync(id)).unwrap();
             showSuccess('已刪除產品');
         } catch (error) {
-            showError(error.response.data.message);
+            showError(error.message);
         }
     }
 
     const deleteAllCartItem = async () => {
         try {
             setIsLoading('loading-delete');
-            const res = await axios.delete(`${API_BASE}/api/${API_PATH}/carts`)
-            getCart();
+            await dispatch(deleteAllCartItemAsync()).unwrap();
             showSuccess('已清空購物車');
         } catch (error) {
-            showError(error.response.data.message);
+            showError(error.message);
         } finally {
             setIsLoading('');
         }

@@ -317,9 +317,14 @@ body {
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    // 新增這段：讓整個 Hero 區域的底部產生透明漸層
+    -webkit-mask-image: linear-gradient(to bottom, black 83%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 83%, transparent 100%);
 
     @media(max-width:768px) {
         height: 85vh;
+        -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
     }
 
     .hero-overlay {
@@ -407,6 +412,144 @@ body {
     }
 }
 
+.object-fit-cover {
+    object-fit: cover;
+}
+
+
+/* 微調 Swiper 導覽點顏色 */
+.home-env-swiper .swiper-pagination-bullet-active {
+    background: #8b5e3c;
+    /* 配合妳的 brown 主色 */
+}
+
+.home-env-swiper,
+.home-env-swiper .swiper-wrapper,
+.home-env-swiper .swiper-slide {
+    height: auto !important;
+    /* 解除預設的 100% 或固定高度 */
+    overflow: visible;
+    /* 確保圓角以外的內容不會被切掉 */
+    border-radius: 2rem;
+}
+
+.home-env-swiper .swiper-slide {
+    display: flex; // 改回 flex
+    height: auto; // 讓它根據 Swiper 的高度決定
+}
+
+.object-fit-cover {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* 針對手機版調整比例（選用） */
+@media (max-width: 768px) {
+    .responsive-container {
+        aspect-ratio: 4 / 3;
+        /* 手機版如果 2/1 太扁，可以改成 4/3 讓圖高一點 */
+        border-radius: 2rem;
+        /* 手機版圓角縮小一點比較好看 */
+    }
+}
+
+// .course-card {
+//     width: 100%;
+//     max-width: 480px;
+//     height: 100%; 
+//     display: flex;
+//     flex-direction: column;
+//     overflow: hidden;
+//     border-radius: 2rem;
+//     background-color: #fff;
+//     border: none;
+
+//     // 關鍵 1：覆蓋掉 JSX 裡的 align-items-center
+//     .row.g-0 {
+//         flex: 1;
+//         display: flex !important;
+//         align-items: stretch !important; // 強制左右兩欄絕對等高
+//         margin: 0;
+//         height: 100%;
+//     }
+
+//     // 關鍵 2：讓 col 變為 flex 並撐開 100% 高度
+//     [class*="col-"] {
+//         display: flex !important;
+//         flex-direction: column;
+//         padding: 0 !important;
+//         height: auto; 
+//         align-self: stretch; // 確保欄位垂直拉滿
+//     }
+
+//     // 關鍵 3：圖片放大的終極指令
+//     .course-img {
+//         width: 100% !important;
+//         height: 100% !important;
+//         min-height: 100%; 
+//         object-fit: cover !important; // 確保圖片填滿且不留白邊
+//         object-position: center;
+//         display: block;
+//         flex-grow: 1; // 確保在 flex 容器中佔滿所有空間
+//     }
+
+//     .card-body {
+//         padding: 1.25rem;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center; 
+//         height: 100%; // 確保文字區也撐滿
+//     }
+
+//     .course-content {
+//         display: -webkit-box;
+//         -webkit-line-clamp: 2;
+//         -webkit-box-orient: vertical;
+//         overflow: hidden;
+//         margin-bottom: 1rem;
+//         color: #6c757d;
+//     }
+// }
+.course-card {
+    display: grid;
+    // 定義兩欄：圖片佔 4 分，文字佔 8 分 (對應你原本的比例)
+    grid-template-columns: 4fr 8fr;
+
+    max-width: 480px;
+    min-height: 200px;
+    height: 100%; // 給一個基本高度
+    overflow: hidden;
+    border-radius: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    // 1. 圖片直接填滿第一個格子
+    .course-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // 放大填滿且不變形的靈魂
+        display: block;
+    }
+
+    // 2. 文字區域在第二個格子
+    .card-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; // 垂直置中
+
+        h5 {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+    }
+
+    // RWD 調整：電腦版想換比例 (5:7) 只要一行
+    @media (min-width: 768px) {
+        grid-template-columns: 5fr 7fr;
+    }
+}
+
 // 登入頁面
 
 .login-section {
@@ -414,7 +557,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 80px);
-    padding: 20px;
+    padding: 25px;
 
 
     .login-card {

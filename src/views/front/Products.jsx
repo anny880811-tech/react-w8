@@ -4,8 +4,7 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import Loading from "../../components/Loading";
 import getProductsError from "../../utils/pushMessage";
 import { useDispatch } from "react-redux";
-import { createAsyncMessage } from "../../slice/messageSlice";
-import { addToCartAsync, getCartAsync } from "../../slice/cartSlice";
+import { addToCartAsync } from "../../slice/cartSlice";
 import useMessage from "../../hooks/useMessage";
 
 
@@ -16,7 +15,6 @@ const Products = () => {
     const [isLoading, setIsLoading] = useState('');
     const [IsPageLoading, setIsPageLoading] = useState(true);
     const [products, setproducts] = useState([]);
-    // const [cartItem, setCartItem] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -35,6 +33,7 @@ const Products = () => {
             } finally { setIsPageLoading(false); }
         };
         getProducts();
+        window.scrollTo(0, 0);
     }, [dispatch]);
     const categories = useMemo(() => {
         // 1. 遍歷所有產品，取出分類名稱
@@ -45,28 +44,16 @@ const Products = () => {
         return [...categoryList];
     }, [products]);
 
-
-    //const currentCategory = searchParams.get('category');
-    // const filteredProducts = useMemo(() => {
-    //     if (!currentCategory) {
-    //         return products;
-    //     }
-    //     return products.filter((product) => { return product.category === currentCategory })
-    // }, [products, currentCategory]);
-
-    //-------------------
     const currentCategory = searchParams.get('category');
     const searchQuery = searchParams.get('q') || ''; // 新增：取得 URL 中的搜尋參數
 
     // --- 修改：filteredProducts 邏輯 ---
     const filteredProducts = useMemo(() => {
         let result = products;
-
         // 1. 先篩選分類
         if (currentCategory) {
             result = result.filter((product) => product.category === currentCategory);
         }
-
         // 2. 再篩選關鍵字
         if (searchQuery) {
             result = result.filter((product) =>
@@ -76,9 +63,7 @@ const Products = () => {
 
         return result;
     }, [products, currentCategory, searchQuery]);
-    // ----------------------------------
 
-    // --- 新增：處理搜尋提交 ---
     const handleSearch = (e) => {
         e.preventDefault();
         // 更新 URL 參數，這會觸發 filteredProducts 重新計算
@@ -87,18 +72,8 @@ const Products = () => {
             q: tempSearch
         });
     };
-    //------------------------
 
     const handleView = (id) => { navigate(`/product/${id}`) }
-
-    // const getCart = async () => {
-    //     try {
-    //         const res = await axios.get(`${API_BASE}/api/${API_PATH}/cart`);
-    //         setCartItem(res.data.data.carts);
-    //     } catch (error) {
-    //         getProductsError(error);
-    //     }
-    // };
 
     const addToCart = async (product_id, qty = 1) => {
         const sentData = {
@@ -109,12 +84,11 @@ const Products = () => {
         }
         try {
             setIsLoading(product_id);
-            //const res = await axios.post(`${API_BASE}/api/${API_PATH}/cart`, sentData)
-            //getCart();
-            await dispatch(addToCartAsync(sentData));
+            await dispatch(addToCartAsync(sentData)).unwrap();
             showSuccess('已加入購物車');
         } catch (error) {
-            showError(error.response.data.message);
+            console.log('元件錯誤訊息', error);
+            showError(error.message || '加入失敗');
         } finally {
             setIsLoading('');
         }
@@ -137,7 +111,6 @@ const Products = () => {
                     </div>
                     )
                 })}
-
             </div>
         </div>
     }
