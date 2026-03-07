@@ -7,7 +7,6 @@ import useMessage from "../../hooks/useMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllCartItemAsync, deleteCartItemAsync, getCartAsync } from "../../slice/cartSlice";
 
-
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
@@ -48,7 +47,7 @@ const Cart = () => {
             await dispatch(getCartAsync()).unwrap();
             showSuccess('已成功更新數量');
         } catch (error) {
-            showError(error.response.data.message);
+            showError(error.message);
         } finally {
             setIsLoading('');
         }
@@ -90,11 +89,12 @@ const Cart = () => {
                     message,
                 }
             });
-            getCart();
             reset();
+            await dispatch(getCartAsync()).unwrap();
             showSuccess('訂單已送出');
         } catch (error) {
-            showError(error.response.data.message);
+            showError(error.message);
+            console.error('訂單送出失敗詳細資訊:', error.response?.data);
         } finally {
             setIsLoading('');
         }

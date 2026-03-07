@@ -54,7 +54,7 @@ const AdminProducts = () => {
             ?.split("=")[1];
         if (!token) {
             alert('您尚未登入，請重新登入');
-            navigate('/login');
+            navigate('/admin/login');
             return;
         }
         axios.defaults.headers.common['Authorization'] = token;
@@ -190,7 +190,7 @@ const AdminProducts = () => {
     return (<>
         <div className="container mt-3 ">
             <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
-                <h2 className="mt-4">產品列表</h2>
+                <h2 className="mt-4">產品管理列表</h2>
                 <button type="button" className="btn btn-brown" onClick={() => { openModal('create') }}>建立新產品</button>
             </div>
 

@@ -19,23 +19,24 @@ h2 {
     width: 90%;
     /* 強制在手機版左右留出 5% 的空隙，避免貼邊 */
     margin: 2rem auto;
-    /* 上下留點距離，左右置中 */
     color: #555;
-    line-height: 2;
-    /* 稍微增加行高，讀起來更放鬆 */
+    line-height: 1.3;
+    font-size: 1.2rem;
+    color: rgb(90, 61, 52);
+    
 }
 
 /* 針對手機版（寬度小於 576px）的微調 */
 @media (max-width: 576px) {
     .about-intro-box {
-        padding: 2rem 1.25rem;
+        padding: 2rem 1rem;
         /* 縮小內距，讓出更多空間給文字 */
         width: 95%;
         /* 手機版可以再寬一點點 */
     }
 
     .about-intro-box h5 {
-        font-size: 1rem;
+        font-size: 0.8rem;
         /* 手機版文字可以稍微縮小一點點點，避免換行太碎 */
         text-align: center;
         /* 選擇性：讓文字左右對齊 */
@@ -105,4 +106,31 @@ h2 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+
+.custom-accordion {
+    border-radius: 2rem;
+    overflow: hidden;
+    margin: 0;
+    border: none;
+
+    @media (min-width: 992px) {
+        margin: 0rem 5rem;
+    }
+
+
+    .accordion-button {
+        height: 4rem;
+        font-weight: bold;
+        background-color: rgb(249, 237, 233);
+        color: rgb(109, 77, 67);
+        box-shadow: none;
+        font-size: 1.1rem;
+    }
+
+    .accordion-collapse {
+        color: rgb(90, 61, 52);
+        font-size: 1.1rem;
+    }
 }

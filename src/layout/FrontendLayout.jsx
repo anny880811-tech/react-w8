@@ -1,6 +1,6 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import logoImg from '../assets/logo.svg'
+import footerLogo from '../assets/footer-logo.png'
 
 const FrontendLayout = () => {
     const carts = useSelector((state) => state.cart.carts);
@@ -11,7 +11,7 @@ const FrontendLayout = () => {
                 <nav className="custom-navbar">
                     <div className="nav-left-group">
                         <Link className="nav-logo" to='/'>
-                            <img src={logoImg} alt="律境 Logo" />
+                            <img src={footerLogo} alt="律境 Logo" />
                         </Link>
                         <div className="nav-links-group">
                             <Link className="nav-link-item ms-0" to='/'>首頁</Link>
@@ -35,7 +35,7 @@ const FrontendLayout = () => {
                     <div className="row">
                         <div className="col-12 col-md-4 mb-3">
                             <div className="footer-info-left">
-                                <div className="logo-custom-footer"><img src='/src/assets/footer-logo.png' alt="律境 Logo" /></div>
+                                <div className="logo-custom-footer"><img src={footerLogo} alt="律境 Logo" /></div>
                                 <h3 className="text-white">律境｜生活動態美學</h3>
                             </div>
                         </div>
