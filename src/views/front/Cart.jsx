@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import * as bootstrap from "bootstrap";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router";
@@ -12,7 +13,10 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 
 const Cart = () => {
     const [isLoading, setIsLoading] = useState('');
-    const [IsPageLoading, setIsPageLoading] = useState(true);
+    const [tempId, setTempId] = useState(null);
+    const [isPageLoading, setIsPageLoading] = useState(true);
+    const modalRef = useRef(null);
+    const modalInstance = useRef(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const { showError, showSuccess } = useMessage();
@@ -30,7 +34,26 @@ const Cart = () => {
             }
         })();
         window.scrollTo(0, 0);
-    }, [dispatch])
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!isPageLoading && modalRef.current) {
+            modalInstance.current = new bootstrap.Modal(modalRef.current);
+        }
+        return () => {
+            if (modalInstance.current) {
+                modalInstance.current.dispose();
+            }
+        }
+    }, [isPageLoading])
+
+    const openModal = (id = 'all') => {
+        setTempId(id)
+        modalInstance.current?.show();
+    };
+    const closeModal = () => {
+        modalInstance.current?.hide();
+    };
 
     const handleView = () => { navigate(`/product`) }
 
@@ -99,7 +122,7 @@ const Cart = () => {
             setIsLoading('');
         }
     }
-    if (IsPageLoading) {
+    if (isPageLoading) {
         return <div className="container mt-3">
             <div className="row">
                 <div className="col">
@@ -118,7 +141,7 @@ const Cart = () => {
                         <h2>目前購物車是空的</h2>
                         <button type='button' className="btn bg-deepPink mt-2" onClick={handleView}><i className="bi bi-cart-fill"></i> 去逛逛</button>
                     </div> : <div>
-                        <h3 className="custom-cart">我的購物車 <button type="button" className="btn btn-danger" onClick={deleteAllCartItem}>{isLoading === 'loading-delete' ? '正在清空購物車...' : '清空購物車'}</button></h3>
+                        <h3 className="custom-cart">我的購物車 <button type="button" className="btn btn-danger" onClick={() => { openModal() }}>{isLoading === 'loading-delete' ? '正在清空購物車...' : '清空購物車'}</button></h3>
                         <table className="custom-cart-table d-none d-md-table">
                             <thead>
                                 <tr>
@@ -163,7 +186,7 @@ const Cart = () => {
                                             </td>
                                             <td className="align-middle">
                                                 <div className="d-flex justify-content-center">
-                                                    <i className="bi bi-trash3-fill" onClick={() => { deleteCartItem(product.id) }}></i>
+                                                    <i className="bi bi-trash3-fill" onClick={() => { openModal(product.id) }}></i>
                                                 </div>
                                             </td>
                                         </tr>
@@ -207,6 +230,27 @@ const Cart = () => {
                         <div className="text-end mt-5">
                             <h4 className='mb-5'>總金額 : {cartItem.reduce((acc, item) => { return acc + (item.product.price * item.qty) }, 0)} 元</h4>
                         </div>
+
+                        <div className="modal" tabIndex="-1" ref={modalRef}>
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">刪除</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeModal}></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p>確定要刪除{ tempId === 'all' ? '所有' : '此' }產品嗎</p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={closeModal}>取消</button>
+                                        <button type="button" className="btn btn-danger"
+                                            onClick={() => { closeModal(); { tempId === 'all' ? deleteAllCartItem() : deleteCartItem(tempId); } }}>
+                                            刪除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="cart-form">
                             <h3>填寫訂單資訊</h3>
                             <form onSubmit={handleSubmit(onSubmit)}>

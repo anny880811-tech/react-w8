@@ -22,6 +22,7 @@ const leftImg = [classroom, gym2, gym3];
 const About = () => {
     const [qa, setQa] = useState([]);
     const dispatch = useDispatch();
+
     useEffect(() => {
         (async () => {
             try {
@@ -35,13 +36,26 @@ const About = () => {
     }, [dispatch]);
 
     const fetchQaList = async () => {
+        let allArticles = [];
         try {
-            const res = await axios.get(`${API_BASE}/api/${API_PATH}/articles`);
-            setQa(res.data.articles);
+            const fristResponse = await axios.get(`${API_BASE}/api/${API_PATH}/articles?page=1`);
+            const data = fristResponse.data;
+            console.log(data);
+            allArticles = [...data.articles];
+            console.log(allArticles);
+            const totalPages = data.pagination.total_pages;
+            console.log(totalPages);
+            for (let i = 2; i <= totalPages; i++) {
+                const response = await axios.get(`${API_BASE}/api/${API_PATH}/articles?page=${i}`);
+                allArticles = [...allArticles, ...response.data.articles];
+            }
+            setQa(allArticles);
+            console.log(allArticles);
         } catch (error) {
             getProductsError(error);
         }
     }
+
     const qaItems = qa.filter((item) => item.tag && item.tag.includes('Q&A'));
 
     return (<>
@@ -104,7 +118,6 @@ const About = () => {
                         }}
                         navigation={true}
                         pagination={true}
-                        mousewheel={true}
                         keyboard={true}
                         modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
                         className="about-env-swiper"

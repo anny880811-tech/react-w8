@@ -76,105 +76,63 @@
     }
 }
 
+
 .custom-footer {
     background-color: rgb(245, 197, 185);
     width: 100%;
-    margin-top: -0.5rem;
     padding: 0 0;
 
-    @include media-breakpoint-up(md) {
-        padding: 0 0;
-    }
-
     .footer-info-left {
-        font-weight: 500;
-        text-align: center;
-
-        .logo-custom-footer {
-
-            display: inline-block;
-            margin-bottom: -0.5rem;
-            margin-left: -18px;
-
-            img {
-                height: 60px; // 直接控制圖片高度
-                width: auto; // 寬度自動維持比例
-                object-fit: contain; // 確保圖片不變形
-
-                @include media-breakpoint-up(md) {
-                    height: 200px;
-                    margin-bottom: -1rem;
-                    text-align: start;
-                }
-            }
+        .logo-custom-footer img {
+            height: 80px;
+            @include media-breakpoint-up(md) { height: 130px; }
         }
     }
 
     .footer-link-group {
-        margin-left: 3rem;
-        margin-top: 2rem;
+        margin-left: 0;
         display: flex;
-        flex-direction: column; // 關鍵：垂直排列
-        align-items: center; // 水平居中 (若要靠左改 flex-start)
-        gap: 8px; // 連結之間的間距 (比 margin-bottom 好用)
+        flex-direction: column;
+        align-items: center;
 
         @include media-breakpoint-up(md) {
-            align-items: flex-start; // 電腦版可以改為靠左對齊，增加設計感
+            margin-left: 3rem;
+            align-items: flex-start;
+            line-height: 2rem;
+        }
+
+        .footer-links-container {
+            display: flex;
+            gap: 15px; // 手機版橫向排比較整齊
+            @include media-breakpoint-up(md) {
+                flex-direction: column; // 電腦版恢復直向排列
+                gap: 5px;
+            }
         }
 
         .footer-link-item {
             color: white;
-            text-decoration: none; // 移除下底線
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            line-height: 1.5;
-
-            // 滑過效果
-            &:hover {
-                color: rgb(249, 149, 121);
-                text-decoration: none; // 確保滑過也沒有底線
-                transform: translateX(5px); // 輕微右移效果，增加動態感
-            }
+            text-decoration: none;
+            font-size: 1.1rem;
+            &:hover { color: rgb(249, 149, 121); }
         }
     }
 
-    .footer-info-right {
-        font-weight: 500;
-
-        .footer-social-group {
-            margin-top: 2rem; // 關鍵：與中間的 .footer-link-group 高度一致
-            display: flex;
-            flex-direction: column;
-            align-items: center; // 手機版居中
-
-            @include media-breakpoint-up(md) {
-                align-items: flex-start; // 電腦版靠左，與標題對齊
-            }
+    .footer-social-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center; // 手機版置中
+        @include media-breakpoint-up(md) {
+            align-items: flex-start; // 電腦版恢復原樣
         }
+    }
 
-        .social-icons-wrapper {
-            i {
-                cursor: pointer;
-                transition: color 0.3s ease;
-
-                &:hover {
-                    color: rgb(249, 149, 121); // 滑過變色
-                }
-            }
-        }
-
-        .contact-info {
-            h5 {
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
-                white-space: nowrap; // 避免地址折行太醜
-            }
-        }
-
-        .copyright-text {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            line-height: 1.4;
-        }
+    // 這裡修正你說字要小一點的問題
+    .copyright-text {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        line-height: 1.5;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
     }
 }

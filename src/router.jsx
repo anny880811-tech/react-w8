@@ -11,6 +11,7 @@ import AdminProducts from "./views/admin/AdminProducts";
 import AdminLayout from "./layout/AdminLayout";
 import AdminOrders from "./views/admin/AdminOrders";
 import AdminQa from "./views/admin/AdminQa";
+import Faq from "./views/front/Faq";
 
 export const router = createHashRouter([
     {
@@ -36,6 +37,10 @@ export const router = createHashRouter([
             {
                 path: 'cart',
                 element: <Cart />,
+            },
+            {
+                path:'faq',
+                element:<Faq/>,
             },
         ],
     },

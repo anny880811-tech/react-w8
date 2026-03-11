@@ -86,6 +86,9 @@
         color: rgb(109, 77, 67);
         font-weight: bold;
     }
+    .bi-trash3-fill{
+        &:hover{color: $my-custom-red;}
+    }
 }
 
 .cart-form {
