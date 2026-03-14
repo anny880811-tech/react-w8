@@ -1,0 +1,38 @@
+@media (max-width: 768px) {
+  /* 隱藏原始表頭 */
+  .responsive-table thead {
+    display: none;
+  }
+
+  /* 讓每一行變成一個獨立的卡片區塊 */
+  .responsive-table tr {
+    display: block;
+    border: 1px solid #dee2e6;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* 讓每個單元格變成一列，並預留空間給標題 */
+  .responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    border-bottom: 1px solid #eee;
+    padding: 8px 5px;
+  }
+
+  .responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* 透過偽元素顯示 data-label 的文字作為標題 */
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-align: left;
+    color: #555;
+  }
+}

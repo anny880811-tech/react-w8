@@ -1,0 +1,87 @@
+// 登入頁面
+
+.login-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 25px;
+
+  .login-card {
+    background-color: rgb(252, 240, 237);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: rgb(109, 77, 67);
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 讓內部的 form-group 置中 */
+    width: 100%;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 280px;
+    align-items: stretch;
+
+    span {
+      color: rgb(199, 82, 82);
+    }
+  }
+
+  label {
+    color: rgb(109, 77, 67);
+    margin-bottom: 0.3rem;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-bottom: 0.3rem;
+
+    &:focus {
+      outline: none;
+      border-color: white;
+    }
+  }
+
+  .btn-brown {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px;
+    color: white;
+    background-color: rgb(109, 77, 67);
+    margin-top: 0.5rem;
+    border: none;
+
+    &:hover {
+      // 滑過時的背景與文字顏色
+      background-color: rgb(245, 197, 185);
+      color: rgb(109, 77, 67);
+    }
+  }
+}

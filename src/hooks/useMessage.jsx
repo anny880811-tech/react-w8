@@ -1,31 +1,31 @@
-import { useDispatch } from "react-redux";
-import { createAsyncMessage } from "../slice/messageSlice";
-
+import { useDispatch } from 'react-redux'
+import { createAsyncMessage } from '../slice/messageSlice'
 
 function useMessage() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-    const showSuccess = (message) => {
-        dispatch(createAsyncMessage({
-            success: true,
-            message,
-        }),
-        );
-    };
+  const showSuccess = (message) => {
+    dispatch(
+      createAsyncMessage({
+        success: true,
+        message,
+      }),
+    )
+  }
 
-    const showError = (message) => {
-        dispatch(createAsyncMessage({
-            success: false,
-            message,
-        }),
-        );
-    };
+  const showError = (message) => {
+    dispatch(
+      createAsyncMessage({
+        success: false,
+        message,
+      }),
+    )
+  }
 
-    return {
-        showSuccess,
-        showError,
-    }
-};
+  return {
+    showSuccess,
+    showError,
+  }
+}
 
-export default useMessage;
-
+export default useMessage

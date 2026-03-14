@@ -1,0 +1,185 @@
+// 產品購物車專用樣式
+@media (max-width: 767.98px) {
+  .custom-cart-table {
+    display: none;
+    /* 隱藏傳統表格 */
+  }
+
+  /* 調整圖片大小與表單間距 */
+  .cart-form {
+    padding: 15px;
+  }
+}
+
+.cart-isPageLoading {
+  @extend .mt-3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 5%;
+
+  h2 {
+    font-weight: bold;
+  }
+}
+
+.custom-emptyCart {
+  @extend .mt-3;
+  background-color: white;
+  color: rgb(109, 77, 67);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 5%;
+
+  h2 {
+    font-weight: bold;
+  }
+}
+
+.custom-cart {
+  @extend .mt-3;
+  color: rgb(109, 77, 67);
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-cart-table {
+  @extend .table;
+  @extend .mt-3;
+
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border-collapse: separate;
+
+  thead {
+    background-color: rgb(245, 197, 185);
+    color: white;
+
+    th {
+      border: none; // 移除表頭邊框線
+      padding: 1rem;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 2rem 1.5rem;
+      }
+    }
+  }
+
+  h3 {
+    color: rgb(247, 155, 132);
+    font-weight: bold;
+  }
+
+  h5 {
+    color: rgb(109, 77, 67);
+    font-weight: bold;
+  }
+  .bi-trash3-fill {
+    &:hover {
+      color: $my-custom-red;
+    }
+  }
+}
+
+.cart-form {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+  border-radius: 12px;
+  background-color: rgb(249, 249, 249);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 讓內部的 form-group 置中 */
+    width: 100%;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 800px;
+    align-items: stretch;
+
+    label {
+      margin-bottom: 0.5rem;
+      /* 將數值調大（例如從 0.5rem 改到 12px 或更多） */
+      display: block;
+      color: rgb(109, 77, 67);
+      font-size: 1.1rem;
+
+      /* 確保它是區塊元素，間距才會正確生效 */
+      &.required::after {
+        content: " *"; // 星號內容
+        color: red; // 星號顏色
+        margin-left: 4px; // 與文字的間距
+      }
+    }
+  }
+
+  textarea.form-control {
+    height: auto;
+    /* 讓 rows 決定高度，或直接寫死高度 */
+    min-height: 120px;
+    /* 設定最小高度，確保看起來夠大 */
+    resize: vertical;
+    /* 只允許垂直調整大小，避免左右拉動破壞版面 */
+    padding: 12px;
+    border-radius: 8px;
+
+    /* 讓輸入框佔滿你設定的 max-width (例如 500px) */
+    width: 100%;
+  }
+
+  .error-message {
+    color: rgb(199, 82, 82);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  h3 {
+    color: rgb(109, 77, 67);
+    font-weight: bold;
+  }
+
+  .btn-brown {
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    color: white;
+    background-color: rgb(109, 77, 67);
+    margin-top: 1rem;
+    border-radius: 12px;
+    border: none;
+
+    &:hover:not(:disabled) {
+      // 滑過時的背景與文字顏色
+      background-color: rgb(245, 197, 185);
+      color: rgb(109, 77, 67);
+      cursor: pointer;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}

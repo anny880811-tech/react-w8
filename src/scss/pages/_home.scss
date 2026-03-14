@@ -1,0 +1,200 @@
+// 首頁專用樣式
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  // 新增這段：讓整個 Hero 區域的底部產生透明漸層
+  -webkit-mask-image: linear-gradient(to bottom, black 83%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 83%, transparent 100%);
+  // 初始狀態：隱形
+  opacity: 0;
+  transition: opacity 2s ease-in-out; // 淡入效果
+
+  &.is-visible {
+    opacity: 1; // 載入完成後變為可見
+  }
+
+  &.is-loading {
+    opacity: 0;
+  }
+
+
+  @include media-breakpoint-down(md) {
+    height: 85vh;
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  }
+
+  .img-custom {
+    @include full-size;
+    object-fit: cover;
+    z-index: -1;
+    width: 100%;
+    height: 100vh; // 確保高度先撐開，避免內容跳動
+    display: block;
+  }
+
+  .hero-overlay {
+    @include full-size;
+    background-color: rgba(150, 150, 150, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-bottom: 18.5%;
+    text-align: center;
+    padding-left: 15px; // 增加左右內距確保不貼邊
+    padding-right: 15px;
+    position: absolute;
+    z-index: 2;
+
+
+    @media (max-width: 768px) {
+      padding-bottom: 20vh;
+    }
+
+    h1,
+    h3 {
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.8rem; // 維持原本大小
+      font-weight: bold;
+      margin-bottom: 1rem;
+      white-space: nowrap;
+
+      @include media-breakpoint-down(md) {
+        // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      // 針對更小的手機（如 iPhone SE）做微調
+      @media (max-width: 375px) {
+        font-size: 1.8rem;
+      }
+    }
+
+    h3 {
+      font-size: 1.7rem; // 這是 h3 預設接近的大小
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+      opacity: 0.9;
+
+      @include media-breakpoint-down(md) {
+        // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+      }
+
+      // 針對更小的手機（如 iPhone SE）做微調
+      @media (max-width: 375px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    p {
+      font-size: 1.1rem; // 維持原本大小
+      line-height: 1.5;
+      letter-spacing: 1px;
+
+      @include media-breakpoint-down(md) {
+        // 手機版縮小字體，確保「律境｜生活動態美學」能一排呈現
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+
+      // 針對更小的手機（如 iPhone SE）做微調
+      @media (max-width: 375px) {
+        font-size: 0.4rem;
+      }
+    }
+  }
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* 微調 Swiper 導覽點顏色 */
+.home-env-swiper .swiper-pagination-bullet-active {
+  background: #8b5e3c;
+  /* 配合妳的 brown 主色 */
+}
+
+
+.home-env-swiper,
+.home-env-swiper .swiper-wrapper,
+.home-env-swiper .swiper-slide {
+  height: auto !important;
+  /* 解除預設的 100% 或固定高度 */
+  overflow: visible;
+  /* 確保圓角以外的內容不會被切掉 */
+  border-radius: 2rem;
+  --swiper-navigation-color: #8b5e3c;
+  --swiper-navigation-size: 24px;
+}
+
+.home-env-swiper .swiper-slide {
+  display: flex; // 改回 flex
+  height: auto; // 讓它根據 Swiper 的高度決定
+}
+
+.object-fit-cover {
+  object-fit: cover;
+  width: 100%;
+}
+
+/* 針對手機版調整比例（選用） */
+@include media-breakpoint-down(md) {
+  .responsive-container {
+    aspect-ratio: 4 / 3;
+    /* 手機版如果 2/1 太扁，可以改成 4/3 讓圖高一點 */
+    border-radius: 2rem;
+    /* 手機版圓角縮小一點比較好看 */
+  }
+}
+
+.course-card {
+  display: grid;
+  // 定義兩欄：圖片佔 4 分，文字佔 8 分 (對應你原本的比例)
+  grid-template-columns: 4fr 8fr;
+
+  max-width: 480px;
+  min-height: 200px;
+  height: 100%; // 給一個基本高度
+  overflow: hidden;
+  border-radius: 2rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  // 1. 圖片直接填滿第一個格子
+  .course-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // 放大填滿且不變形的靈魂
+    display: block;
+  }
+
+  // 2. 文字區域在第二個格子
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // 垂直置中
+
+    h5 {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 5fr 7fr;
+  }
+}
