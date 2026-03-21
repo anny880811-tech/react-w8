@@ -98,16 +98,12 @@ function CartForm({ handleSubmit, onSubmit, register, errors, isLoading, cartIte
             className="btn-brown"
             disabled={isLoading !== '' || cartItem.length === 0}
           >
-            {isLoading === 'loading-submit'
-              ? (
-                <div className="custom-loading">
-                  <Loading height={30} width={30} />
-                  <span className="ms-2">訂單送出中...</span>
-                </div>
-              )
-              : (
-                '送出訂單'
-              )}
+            {isLoading === 'loading-submit' ? (
+              <div className="custom-loading">
+                <Loading height={30} width={30} />
+                <span className="ms-2">訂單送出中...</span>
+              </div>
+            ) : ('送出訂單')}
           </button>
         </form>
       </div>

@@ -6,12 +6,13 @@ import SingleProduct from './views/front/SingleProduct'
 import Cart from './views/front/Cart'
 import Products from './views/front/Products'
 import About from './views/front/About'
-import Login from './views/admin/Login'
+import Login from './views/front/Login'
 import AdminProducts from './views/admin/AdminProducts'
 import AdminLayout from './layout/AdminLayout'
 import AdminOrders from './views/admin/AdminOrders'
 import AdminQa from './views/admin/AdminQa'
 import Faq from './views/front/Faq'
+import ProtectedRoute from './components/ProtectedRoute'
 
 export const router = createHashRouter([
   {
@@ -42,16 +43,16 @@ export const router = createHashRouter([
         path: 'faq',
         element: <Faq />,
       },
-    ],
-  },
-  {
-    path: '/admin',
-    element: <AdminLayout />,
-    children: [
       {
         path: 'login',
         element: <Login />,
       },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <ProtectedRoute><AdminLayout /></ProtectedRoute>,
+    children: [
       {
         path: 'product',
         element: <AdminProducts />,

@@ -26,11 +26,7 @@ function AdminProductPagination({ pagination, getProducts }) {
               (_, i) => i + 1,
             ).map((page) => {
               return (
-                <li
-                  className={`page-item ${page === pagination.current_page ? 'active disabled' : ''}
-                        `}
-                  key={page}
-                >
+                <li className={`page-item ${page === pagination.current_page ? 'active disabled' : ''}`} key={page}>
                   <a
                     className="page-link"
                     href="#"
@@ -47,9 +43,7 @@ function AdminProductPagination({ pagination, getProducts }) {
                 </li>
               )
             })}
-            <li
-              className={`page-item ${!pagination.has_next ? 'disabled' : ''}`}
-            >
+            <li className={`page-item ${!pagination.has_next ? 'disabled' : ''}`}>
               <a
                 className="page-link"
                 href="#"

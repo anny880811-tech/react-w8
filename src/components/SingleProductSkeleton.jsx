@@ -11,7 +11,7 @@ function SingleProductSkeleton() {
 
         <div className="row gx-lg-5 gy-4 mt-2">
           {/* 左側圖片區骨架 */}
-          <div className="col-12 col-lg-4">
+          <div className="col-lg-4">
             {/* 主圖 */}
             <div
               className="skeleton-main-img"
@@ -38,7 +38,7 @@ function SingleProductSkeleton() {
           </div>
 
           {/* 右側資訊區骨架 */}
-          <div className="col-12 col-lg-8">
+          <div className="col-lg-8">
             <div
               className="skeleton-line mb-3"
               style={{ height: '40px', width: '70%', borderRadius: '4px' }}

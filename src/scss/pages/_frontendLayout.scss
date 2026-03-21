@@ -127,6 +127,16 @@
     }
   }
 
+  .no-style-link {
+    text-decoration: none;
+    color: white;
+    outline: none;
+
+    &:hover {
+      color: rgb(249, 149, 121);
+    }
+  }
+
   .footer-social-group {
     display: flex;
     flex-direction: column;
@@ -146,8 +156,12 @@
     padding-top: 1rem;
   }
 
-  .tel-custom{
-    text-decoration:none;
+  .tel-custom {
+    text-decoration: none;
     color: white;
+
+    &:hover {
+      color: rgb(249, 149, 121);
+    }
   }
 }

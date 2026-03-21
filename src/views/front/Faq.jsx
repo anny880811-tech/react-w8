@@ -51,6 +51,7 @@ const Faq = () => {
                     id={`flush-${index}`}
                     className="accordion-collapse collapse"
                     aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample"
                   >
                     <div className="accordion-body">{item.description}</div>
                   </div>

@@ -59,11 +59,11 @@ function EnvironmentSection() {
                       <div className="responsive-container">
                         {/* 右圖作為「底圖」，它填滿整個容器 */}
                         <div className="panel panel-right">
-                          <img src={item} alt="教室長圖" />
+                          <img src={item} alt="教室長圖" loading="lazy" />
                         </div>
                         {/* 左圖作為「覆蓋層」，它蓋在右圖上面，並切出斜邊 */}
                         <div className="panel panel-left">
-                          <img src={leftImg[index]} alt="教室方圖" />
+                          <img src={leftImg[index]} alt="教室方圖" loading="lazy" />
                         </div>
                       </div>
                     </SwiperSlide>

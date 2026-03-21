@@ -114,7 +114,7 @@ const SingleProduct = () => {
             返回課程列表
           </h5>
           <div className="row gx-lg-5 gy-4 align-items-stretch mt-2">
-            <div className="col-12 col-lg-4">
+            <div className="col-lg-4">
               <div className="main-image-container shadow">
                 {mainImage && (
                   <img
@@ -146,7 +146,7 @@ const SingleProduct = () => {
                 })}
               </div>
             </div>
-            <div className="col-12 col-lg-8">
+            <div className="col-lg-8">
               <div
                 id="colorBox"
                 className="p-5 mb-3  rounded-4 custom-color-box  h-100 shadow"

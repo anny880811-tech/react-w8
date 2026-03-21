@@ -50,17 +50,6 @@ const AdminProducts = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const token = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('anToken='))
-      ?.split('=')[1]
-    if (!token) {
-      alert('您尚未登入，請重新登入')
-      navigate('/admin/login')
-      return
-    }
-    axios.defaults.headers.common['Authorization'] = token
-
     productModalRef.current = new bootstrap.Modal('#productModal', {
       keyboard: false,
     })
@@ -215,7 +204,6 @@ const AdminProducts = () => {
             建立新產品
           </button>
         </div>
-
         <AdminProductTable onOpenModal={openModal} products={productList} />
       </div>
       <AdminProductModal
@@ -232,10 +220,7 @@ const AdminProducts = () => {
         onUploadImage={uploadImage}
         onCloseModal={closeModal}
       />
-      <AdminProductPagination
-        pagination={pagination}
-        getProducts={getProducts}
-      />
+      <AdminProductPagination pagination={pagination} getProducts={getProducts} />
     </>
   )
 }

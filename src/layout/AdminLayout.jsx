@@ -7,15 +7,9 @@ const AdminLayout = () => {
         <nav className="custom-navbar">
           <div className="nav-links-group">
             {/* <Link className="nav-link-item" to='/'>首頁</Link> */}
-            <Link className="nav-link-item" to="/admin/product">
-              產品列表
-            </Link>
-            <Link className="nav-link-item" to="/admin/order">
-              訂單列表
-            </Link>
-            <Link className="nav-link-item" to="/admin/qa">
-              問題列表
-            </Link>
+            <Link className="nav-link-item" to="/admin/product">產品列表</Link>
+            <Link className="nav-link-item" to="/admin/order">訂單列表</Link>
+            <Link className="nav-link-item" to="/admin/qa">問題列表</Link>
           </div>
         </nav>
       </header>

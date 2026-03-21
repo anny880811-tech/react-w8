@@ -16,7 +16,7 @@ const NotFound = () => {
     <>
       <div className="container pt-0 pt-md-5">
         <div className="row">
-          <div className="col-12 col-md-6 text-center text-md-start ps-md-5">
+          <div className="col-md-6 text-center text-md-start ps-md-5">
             <img
               src={notFound}
               alt="404"
@@ -24,7 +24,7 @@ const NotFound = () => {
               style={{ height: '500px', objectFit: 'contain' }}
             />
           </div>
-          <div className="col-12 col-md-6 ms-5 ms-md-0 pt-0 pt-md-5 mt-md-5">
+          <div className="col-md-6 ms-5 ms-md-0 pt-0 pt-md-5 mt-md-5">
             <div
               className="display-1 fw-bold mt-md-2"
               style={{

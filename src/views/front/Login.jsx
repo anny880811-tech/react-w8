@@ -1,6 +1,8 @@
 import axios from 'axios'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { setCookie, getCookie } from '../../utils/cookieHelpers'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 
@@ -11,6 +13,15 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
+
+  useEffect(() => {
+    const token = getCookie('anToken')
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = token
+      navigate('/admin/product')
+    }
+  }, [navigate])
+
   const onSubmit = async (data) => {
     const { email, password } = data
     try {
@@ -19,7 +30,8 @@ const Login = () => {
         password,
       })
       const { token, expired } = res.data
-      document.cookie = `anToken=${token}; expires=${new Date(expired).toUTCString()}`
+      const expireDays = (new Date(expired).getTime() - new Date().getTime()) / (24 * 60 * 60 * 1000)
+      setCookie('anToken', token, expireDays)
       navigate('/admin/product')
     }
     catch (error) {

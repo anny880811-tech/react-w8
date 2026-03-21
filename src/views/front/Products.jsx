@@ -106,7 +106,7 @@ const Products = () => {
         <div className="row gx-3 gy-5">
           {Array.from({ length: 6 }, (_, i) => {
             return (
-              <div className="col-12 col-md-6 col-lg-4" key={i}>
+              <div className="col-md-6 col-lg-4" key={i}>
                 <div className="skeleton-card">
                   <div className="skeleton-img"></div>
                   <div className="skeleton-body"></div>
@@ -159,7 +159,7 @@ const Products = () => {
               {currentCategory ? `${currentCategory}` : '全部課程'}
             </h3>
           </div>
-          <div className="col-12 col-md-3 ms-auto mb-3 search-container-right">
+          <div className="col-md-3 ms-auto mb-3 search-container-right">
             <form className="search-form mt-3" onSubmit={handleSearch}>
               <div className="search-input-group">
                 <input
@@ -181,12 +181,13 @@ const Products = () => {
         <div className="row gx-3 gy-5">
           {filteredProducts.map((product) => {
             return (
-              <div className="col-12 col-md-6 col-lg-4" key={product.id}>
+              <div className="col-md-6 col-lg-4" key={product.id}>
                 <div className="custom-card">
                   <img
                     src={product.imageUrl}
                     className="custom-card-img"
                     alt="主圖"
+                    loading="lazy"
                   />
                   <div className="custom-card-body">
                     <h5 className="card-title">{product.title}</h5>

@@ -85,16 +85,6 @@ const AdminQa = () => {
   }
 
   useEffect(() => {
-    const token = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('anToken='))
-      ?.split('=')[1]
-    if (!token) {
-      alert('您尚未登入，請重新登入')
-      navigate('/admin/login')
-      return
-    }
-    axios.defaults.headers.common['Authorization'] = token
     fetchQaList()
   }, [navigate])
 
@@ -182,18 +172,10 @@ const AdminQa = () => {
                               role="group"
                               aria-label="Basic outlined example"
                             >
-                              <button
-                                type="button"
-                                className="btn btn-outline-primary"
-                                onClick={() => { openModal('edit', item) }}
-                              >
+                              <button type="button" className="btn btn-outline-primary" onClick={() => { openModal('edit', item) }}>
                                 編輯
                               </button>
-                              <button
-                                type="button"
-                                className="btn btn-outline-danger"
-                                onClick={() => { openModal('delete', item) }}
-                              >
+                              <button type="button" className="btn btn-outline-danger" onClick={() => { openModal('delete', item) }}>
                                 刪除
                               </button>
                             </div>

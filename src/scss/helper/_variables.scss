@@ -1,0 +1,21 @@
+$my-custom-green: #629173;
+$my-custom-red: #924d56;
+$my-custom-blue: #4d6692;
+$my-custom-secondary: #8a919e;
+
+$theme-colors: (
+  "success": $my-custom-green,
+  "danger": $my-custom-red,
+  "primary": $my-custom-blue,
+  "secondary": $my-custom-secondary,
+);
+
+// 2. 定義字體變數
+$font-primary: "Noto Sans TC", sans-serif; // 主要內文、標題用
+$font-price: "Montserrat", sans-serif; // 專門給價格、數字用
+$font-serif: "Noto Serif TC", serif; // 精品感標題用 (選配)
+
+// 3. 定義常用字重 (Weight)
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-bold: 700;

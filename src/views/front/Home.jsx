@@ -65,9 +65,8 @@ const Home = () => {
         <h2 className="mb-5">熱門課程推薦</h2>
         {products.length > 0 && (
           <Swiper
-            // 1. 預設值（針對手機/極小螢幕，如 < 640px）
-            slidesPerView={1.2} // 設定 1.2 張可以露出下一張的邊緣，提示使用者可以滑動
-            spaceBetween={15} // 手機版間距小一點比較美觀
+            slidesPerView={1.2}
+            spaceBetween={15}
             freeMode={true}
             navigation={true}
             pagination={{
@@ -78,19 +77,15 @@ const Home = () => {
               delay: 2000,
               disableOnInteraction: false,
             }}
-            // 2. 響應式中斷點
             breakpoints={{
-              // 手機：顯示 1.2 張，克制單張寬度
               0: {
                 slidesPerView: 1.2,
                 spaceBetween: 16,
               },
-              // 平板：顯示 2.2 張
               768: {
                 slidesPerView: 2.2,
                 spaceBetween: 20,
               },
-              // 桌機：顯示 3 張，配合 max-width 維持精緻度
               1024: {
                 slidesPerView: 3,
                 spaceBetween: 30,
@@ -107,6 +102,7 @@ const Home = () => {
                       src={product.imageUrl}
                       className="course-img"
                       alt={product.title}
+                      loading="lazy"
                     />
                     <div className="card-body">
                       <h5 className="text-truncate">{product.title}</h5>

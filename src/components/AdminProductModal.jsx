@@ -3,12 +3,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
   modalType, temProduct, onCloseModal }) {
   return (
     <>
-      <div
-        className="modal fade"
-        id="productModal"
-        tabIndex="-1"
-        ref={productModalRef}
-      >
+      <div className="modal fade" id="productModal" tabIndex="-1" ref={productModalRef}>
         <div className="modal-dialog modal-xl modal-dialog-centered">
           <div className="modal-content shadow">
             <div className="modal-header bg-white py-3">
@@ -16,38 +11,16 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                 {modalType === 'create' ? '新增' : modalType === 'edit' ? '編輯' : '刪除'}
                 產品資訊
               </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-              </button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             {modalType === 'delete' ? (
               <div className="card-body p-4">
                 <form>
-                  <div className="mb-3">
-                    <h3>
-                      您確定要刪除
-                      {temProduct.title}
-                      嗎?
-                    </h3>
-                  </div>
+                  <div className="mb-3"><h3>{`您確定要刪除${temProduct.title}嗎?`}</h3></div>
                   <hr />
                   <div className="d-flex justify-content-end gap-2">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={onCloseModal}
-                    >
-                      取消
-                    </button>
-                    <button
-                      type="submit"
-                      className="btn btn-danger px-4"
-                      onClick={onUpdateProduct}
-                    >
+                    <button type="button" className="btn btn-outline-secondary" onClick={onCloseModal}>取消</button>
+                    <button type="submit" className="btn btn-danger px-4" onClick={onUpdateProduct}>
                       {isLoading === 'replace' ? '刪除中...' : '確認刪除'}
                     </button>
                   </div>
@@ -57,9 +30,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
               <div className="card-body p-4">
                 <form>
                   <div className="mb-3">
-                    <label htmlFor="title" className="form-label">
-                      產品名稱
-                    </label>
+                    <label htmlFor="title" className="form-label">產品名稱</label>
                     <input
                       type="text"
                       className="form-control"
@@ -73,9 +44,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
 
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                      <label htmlFor="productImage" className="form-label">
-                        {isLoading === 'add' ? '圖片上傳中...' : '上傳圖片'}
-                      </label>
+                      <label htmlFor="productImage" className="form-label">{isLoading === 'add' ? '圖片上傳中...' : '上傳圖片'}</label>
                       <input
                         key={temProduct.id || ''}
                         className="form-control"
@@ -84,9 +53,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                         onChange={onUploadImage}
                       />
                       <div className="mt-3">
-                        <label htmlFor="imageUrl" className="form-label">
-                          輸入圖片網址
-                        </label>
+                        <label htmlFor="imageUrl" className="form-label">輸入圖片網址</label>
                         <input
                           className="form-control"
                           type="text"
@@ -108,12 +75,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                         {temProduct.imagesUrl?.map((url, index) => {
                           return (
                             <div key={index}>
-                              <label
-                                htmlFor="imagesUrl"
-                                className="form-label mt-3"
-                              >
-                                輸入更多圖片網址
-                              </label>
+                              <label htmlFor="imagesUrl" className="form-label mt-3">輸入更多圖片網址</label>
                               <input
                                 className="form-control"
                                 type="text"
@@ -124,58 +86,28 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                                 onChange={e => onImageChange(e, index)}
                               />
                               {url && (
-                                <img
-                                  className="img-fluid mt-3 object-fit-cover"
-                                  style={{ width: '100%', aspectRatio: '1 / 1' }}
-                                  src={url}
-                                  alt="副圖"
-                                />
+                                <img className="img-fluid mt-3 object-fit-cover" style={{ width: '100%', aspectRatio: '1 / 1' }} src={url} alt="副圖" />
                               )}
                             </div>
                           )
                         })}
                       </div>
-
                       <div className="mt-3">
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary w-100"
-                          onClick={onAddImage}
-                        >
-                          新增圖片
-                        </button>
+                        <button type="button" className="btn btn-outline-primary w-100" onClick={onAddImage}>新增圖片</button>
                       </div>
                       <div className="mt-3">
-                        <button
-                          type="button"
-                          className="btn btn-outline-danger w-100"
-                          onClick={onRemoveImage}
-                        >
-                          刪除圖片
-                        </button>
+                        <button type="button" className="btn btn-outline-danger w-100" onClick={onRemoveImage}>刪除圖片</button>
                       </div>
                     </div>
                     <div className="col-md-6 mb-3">
                       <div>
-                        <label htmlFor="content" className="form-label">
-                          產品內容
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="content"
-                          placeholder="請輸入內容"
-                          name="content"
-                          value={temProduct.content}
-                          onChange={onModalChange}
-                        />
+                        <label htmlFor="content" className="form-label">產品內容</label>
+                        <input type="text" className="form-control" id="content" placeholder="請輸入內容" name="content" value={temProduct.content} onChange={onModalChange} />
                       </div>
                       <div className="row">
                         <div className="col-md-6 mb-3">
                           <div className="mt-3">
-                            <label htmlFor="category" className="form-label">
-                              產品類別
-                            </label>
+                            <label htmlFor="category" className="form-label">產品類別</label>
                             <select
                               type="selet-one"
                               className="form-select"
@@ -197,12 +129,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                             </select>
                           </div>
                           <div className="mt-3">
-                            <label
-                              htmlFor="origin_price"
-                              className="form-label"
-                            >
-                              產品原價 (TWD)
-                            </label>
+                            <label htmlFor="origin_price" className="form-label">產品原價 (TWD)</label>
                             <div className="input-group">
                               {' '}
                               <span className="input-group-text">$</span>
@@ -219,9 +146,7 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                         </div>
                         <div className="col-md-6 mb-3">
                           <div className="mt-3">
-                            <label htmlFor="unit" className="form-label">
-                              產品單位
-                            </label>
+                            <label htmlFor="unit" className="form-label">產品單位</label>
                             <input
                               type="text"
                               className="form-control"
@@ -252,23 +177,11 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                         </div>
                       </div>
                       <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          id="Check"
-                          name="is_enabled"
-                          value=""
-                          type="checkbox"
-                          checked={temProduct.is_enabled}
-                          onChange={onModalChange}
-                        />
-                        <label className="form-check-label" htmlFor="Check">
-                          是否啟用
-                        </label>
+                        <input className="form-check-input" id="Check" name="is_enabled" value="" type="checkbox" checked={temProduct.is_enabled} onChange={onModalChange} />
+                        <label className="form-check-label" htmlFor="Check">是否啟用</label>
                       </div>
                       <div className="mt-3">
-                        <label htmlFor="description" className="form-label">
-                          產品描述
-                        </label>
+                        <label htmlFor="description" className="form-label">產品描述</label>
                         <textarea
                           className="form-control"
                           id="description"
@@ -283,18 +196,10 @@ function AdminProductModal({ productModalRef, categories, onAddImage, onRemoveIm
                   </div>
                   <hr />
                   <div className="d-flex justify-content-end gap-2">
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={onCloseModal}
-                    >
+                    <button type="button" className="btn btn-outline-secondary" onClick={onCloseModal}>
                       取消編輯
                     </button>
-                    <button
-                      type="submit"
-                      className="btn btn-primary px-4"
-                      onClick={onUpdateProduct}
-                    >
+                    <button type="submit" className="btn btn-primary px-4" onClick={onUpdateProduct}>
                       {isLoading === 'replace' ? '儲存變更中...' : '儲存變更'}
                     </button>
                   </div>
