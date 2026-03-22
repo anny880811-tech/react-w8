@@ -6,12 +6,12 @@ import {
   Keyboard,
   Autoplay,
 } from 'swiper/modules'
-import pexels from '../assets/pexels-photo-18499500.png'
-import gym from '../assets/03.png'
-import classroom from '../assets/classroom.png'
-import gym1 from '../assets/06.png'
-import gym3 from '../assets/05.jpeg'
-import gym2 from '../assets/02.png'
+import pexels from '../assets/pexels-photo-18499500.webp'
+import gym from '../assets/03.webp'
+import classroom from '../assets/classroom.webp'
+import gym1 from '../assets/06.webp'
+import gym3 from '../assets/05.webp'
+import gym2 from '../assets/02.webp'
 
 const rightImg = [pexels, gym, gym1]
 const leftImg = [classroom, gym2, gym3]

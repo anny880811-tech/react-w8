@@ -6,6 +6,7 @@ import getProductsError from '../../utils/pushMessage'
 import { useDispatch } from 'react-redux'
 import { addToCartAsync } from '../../slice/cartSlice'
 import useMessage from '../../hooks/useMessage'
+import ProductsSkeleton from '../../components/ProductsSkeleton'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 const API_PATH = import.meta.env.VITE_API_PATH
@@ -101,28 +102,7 @@ const Products = () => {
     }
   }
   if (IsPageLoading) {
-    return (
-      <div className="container mt-5">
-        <div className="row gx-3 gy-5">
-          {Array.from({ length: 6 }, (_, i) => {
-            return (
-              <div className="col-md-6 col-lg-4" key={i}>
-                <div className="skeleton-card">
-                  <div className="skeleton-img"></div>
-                  <div className="skeleton-body"></div>
-                  <div className="skeleton-title"></div>
-                  <div className="skeleton-text"></div>
-                  <div className="skeleton-btn-group">
-                    <div className="skeleton-btn"></div>
-                    <div className="skeleton-btn"></div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    )
+    return (<ProductsSkeleton />)
   }
   return (
     <>
@@ -184,7 +164,7 @@ const Products = () => {
               <div className="col-md-6 col-lg-4" key={product.id}>
                 <div className="custom-card">
                   <img
-                    src={product.imageUrl}
+                    src={`${product.imageUrl}?w=1200&q=80`}
                     className="custom-card-img"
                     alt="主圖"
                     loading="lazy"

@@ -142,6 +142,12 @@
   }
 }
 
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+  /* 告訴瀏覽器這個元素會變動，請預先準備硬體加速 */
+  will-change: opacity, transform; 
+}
+
 // Skeleton Screen
 // 骨架屏通用樣式
 .skeleton-main-img,

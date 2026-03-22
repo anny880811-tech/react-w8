@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Pagination, Navigation, Autoplay } from 'swiper/modules'
 import Faq from './Faq'
 import EnvironmentSection from '../../components/EnvironmentSection'
+import backgroundPhoto from '../../assets/pexels-photo-35215421.webp'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 const API_PATH = import.meta.env.VITE_API_PATH
@@ -17,7 +18,6 @@ const Home = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      // setIsLoading(false);
       try {
         const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
         setproducts(res.data.products)
@@ -56,7 +56,8 @@ const Home = () => {
           </div>
         </div>
         <img
-          src="https://images.pexels.com/photos/35215421/pexels-photo-35215421.jpeg"
+          src={backgroundPhoto}
+          fetchPriority="high"
           className="img-custom"
           onLoad={() => { setHeroImageLoaded(true) }}
         />
@@ -94,15 +95,16 @@ const Home = () => {
             modules={[FreeMode, Pagination, Navigation, Autoplay]}
             className="home-env-swiper"
           >
-            {products.map((product) => {
+            {products.map((product, index) => {
               return (
                 <SwiperSlide key={product.id}>
                   <div className="course-card shadow-sm mx-auto">
                     <img
-                      src={product.imageUrl}
+                      src={`${product.imageUrl}?w=800&q=80`}
                       className="course-img"
                       alt={product.title}
-                      loading="lazy"
+                      // 如果這區塊不在首屏，則可以全部 lazy
+                      loading={index < 3 ? 'eager' : 'lazy'}
                     />
                     <div className="card-body">
                       <h5 className="text-truncate">{product.title}</h5>

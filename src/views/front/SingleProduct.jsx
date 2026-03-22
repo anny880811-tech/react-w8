@@ -118,7 +118,7 @@ const SingleProduct = () => {
               <div className="main-image-container shadow">
                 {mainImage && (
                   <img
-                    src={mainImage}
+                    src={`${mainImage}?w=900&q=10`}
                     className="product-main-img"
                     alt="主圖"
                   />
@@ -126,7 +126,7 @@ const SingleProduct = () => {
               </div>
               <div className="thumb-scroll-container">
                 <img
-                  src={product.imageUrl}
+                  src={`${product.imageUrl}?w=200&q=30`}
                   className="thumb-item"
                   alt="主圖"
                   onClick={() => {
@@ -136,11 +136,13 @@ const SingleProduct = () => {
                 {product.imagesUrl?.map((image, index) => {
                   return (
                     <img
-                      src={image}
+                      src={`${image}?w=200&q=30`}
                       key={index}
                       className="thumb-item"
                       alt="更多圖片"
-                      onClick={() => { setMainImage(image) }}
+                      onClick={() => {
+                        setMainImage(image)
+                      }}
                     />
                   )
                 })}
@@ -260,9 +262,10 @@ const SingleProduct = () => {
                       <SwiperSlide key={item.id}>
                         <div className="card h-100">
                           <img
-                            src={item.imageUrl}
+                            src={`${item.imageUrl}?w=900&q=50`}
                             className="custom-card-swiperSlide-img"
                             alt="產品主圖"
+                            loading="lazy"
                           />
                           <div className="card-body">
                             <h5 className="card-title text-center">
