@@ -208,13 +208,6 @@ const Cart = () => {
                 元
               </h4>
             </div>
-            <CartModal
-              modalRef={modalRef}
-              onCloseModal={closeModal}
-              tempId={tempId}
-              onDeleteAllCartItem={deleteAllCartItem}
-              onDeleteCartItem={deleteCartItem}
-            />
             <CartForm
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
@@ -226,6 +219,13 @@ const Cart = () => {
           </div>
         )}
       </div>
+      <CartModal
+        modalRef={modalRef}
+        onCloseModal={closeModal}
+        tempId={tempId}
+        onDeleteAllCartItem={deleteAllCartItem}
+        onDeleteCartItem={deleteCartItem}
+      />
     </>
   )
 }
